@@ -1,0 +1,26 @@
+tree = {
+    'A':['B','C'], 'B':['D','E'], 'C':['F','G'],
+    'D':['H','I'], 'E':['J','K'], 'F':['L','M'], 'G':['N','O']
+}
+v = {'H':3,'I':12,'J':8,'K':2,'L':4,'M':6,'N':14,'O':5}
+
+def minimax(n, mx=True):
+    if n in v: return v[n]
+    x = [minimax(c, not mx) for c in tree[n]]
+    return max(x) if mx else min(x)
+
+def alphabeta(n, a=-float('inf'), b=float('inf'), mx=True):
+    if n in v: return v[n]
+    if mx:
+        for c in tree[n]:
+            a = max(a, alphabeta(c,a,b,False))
+            if a >= b: break
+        return a
+    else:
+        for c in tree[n]:
+            b = min(b, alphabeta(c,a,b,True))
+            if a >= b: break
+        return b
+
+print(minimax('A'))
+print(alphabeta('A'))
