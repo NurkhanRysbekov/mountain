@@ -1,0 +1,14 @@
+def bayes_update(p_h, p_e_given_h, p_e_given_not_h):
+    p_not_h = 1.0 - p_h #Қауіптің болмау ықтималдығын табу
+    p_e = (p_e_given_h * p_h) + (p_e_given_not_h * p_not_h)
+    p_h_given_e = (p_e_given_h * p_h) / p_e
+    return p_h_given_e
+
+
+p_alarm_given_hazard = 0.90
+p_alarm_given_safe = 0.10
+
+p_values = [0.05, 0.20, 0.50, 0.80]
+for p in p_values:
+    res = bayes_update(p, p_alarm_given_hazard, p_alarm_given_safe)
+    print(f"Бастапқы P(H) = {p}, Соңғы P(H|ALARM) = {res:.4f}")
